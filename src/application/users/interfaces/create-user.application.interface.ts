@@ -7,9 +7,6 @@ export interface CreateUserApplicationInput {
   type: UserRole;
 }
 
-export interface CreateUserApplicationOutput
-  extends CreateUserApplicationInput {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
+export interface CreateUserApplicationOutput {
+  message: string;
 }

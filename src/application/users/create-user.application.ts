@@ -5,27 +5,45 @@ import {
   CreateUserApplicationOutput,
 } from './interfaces/create-user.application.interface';
 import { VerifyEmailUsecase } from 'src/core/users/usecases/verify-email.usecase';
-import { Bcrypt } from 'src/infra/database/postgres/auth/bcrypt';
+import { EmailService } from 'src/infra/mail/service/email.service';
+import { EmailTemplateParams } from 'src/shared/utils/interface/email-template';
+import { AuthService } from 'src/infra/auth/auth.service';
+import { Bcrypt } from 'src/infra/auth/bcrypt';
 
 @Injectable()
 export class CreateUserApplication {
   constructor(
-    @Inject(CreateUserUsecase) private _createUserUseCase: CreateUserUsecase,
-    @Inject(VerifyEmailUsecase) private _verifyEmailUsecase: VerifyEmailUsecase,
-    @Inject(Bcrypt) private _bcrypt: Bcrypt,
+    @Inject(CreateUserUsecase) private createUserUseCase: CreateUserUsecase,
+    @Inject(VerifyEmailUsecase) private verifyEmailUsecase: VerifyEmailUsecase,
+    @Inject(Bcrypt) private bcrypt: Bcrypt,
+    @Inject(EmailService) private readonly emailService: EmailService,
+    @Inject(AuthService) private readonly authService: AuthService,
   ) {}
   async execute(
     input: CreateUserApplicationInput,
   ): Promise<CreateUserApplicationOutput> {
-    const emailAlreadyRegistered = await this._verifyEmailUsecase.execute({
-      email: input.email,
-    });
-    if (emailAlreadyRegistered) {
-      throw new BadRequestException('Email Already Exist!');
+    try {
+      const emailAlreadyRegistered = await this.verifyEmailUsecase.execute({
+        email: input.email,
+      });
+      if (emailAlreadyRegistered) {
+        throw new BadRequestException('Email Already Exist!');
+      }
+      input.password = await this.bcrypt.sign(input.password);
+      const user = await this.createUserUseCase.execute(input);
+      delete user.password;
+      const token = await this.authService.createToken({ user: user });
+      const link = `${process.env.BASE_URL}/users/${user.id}/${token}`;
+      const mailData: EmailTemplateParams = {
+        to_name: user.name,
+        to_email: user.email,
+        message: link,
+      };
+      if (await this.emailService.sendRegisterationEmail(mailData)) {
+        return { message: 'you will shortly receive registration email' };
+      }
+    } catch (err) {
+      throw new BadRequestException(err.message);
     }
-    input.password = await this._bcrypt.sign(input.password);
-    const user = await this._createUserUseCase.execute(input);
-    delete user.password;
-    return user;
   }
 }

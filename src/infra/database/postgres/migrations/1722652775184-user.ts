@@ -39,6 +39,11 @@ export class User1722652775184 implements MigrationInterface {
             enum: ['admin', 'client'],
           },
           {
+            name: 'email_verified',
+            type: 'boolean',
+            default: false,
+          },
+          {
             name: 'created_at',
             type: 'timestamptz',
             isNullable: false,

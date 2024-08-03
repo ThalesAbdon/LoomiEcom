@@ -1,0 +1,21 @@
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { ActivedAccountUsecase } from 'src/core/users/usecases/actived-account.usecase';
+import { ActivedAccountApplicationInput } from './interfaces/actived-account.application.interface';
+import { AuthService } from 'src/infra/auth/auth.service';
+
+@Injectable()
+export class ActivedAccountApplication {
+  constructor(
+    @Inject(ActivedAccountUsecase)
+    private activedAccountUseCase: ActivedAccountUsecase,
+    @Inject(AuthService) private readonly authService: AuthService,
+  ) {}
+
+  async execute(input: ActivedAccountApplicationInput): Promise<void> {
+    const decoded = await this.authService.checkToken(input.token);
+    if (!decoded.user?.id) {
+      throw new BadRequestException('Invalid Token!');
+    }
+    await this.activedAccountUseCase.execute({ id: decoded.user.id });
+  }
+}
