@@ -23,7 +23,5 @@ export class CreateUserDtoInput {
 }
 
 export class CreateUserDtoOutput {
-  name: string;
-  email: string;
-  type: UserRole;
+  message: string;
 }

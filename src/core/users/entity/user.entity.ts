@@ -18,6 +18,9 @@ export class UserEntity {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
   type: UserRole;
 
+  @Column({ name: 'email_verified' })
+  emailVerified: boolean;
+
   @Column({ name: 'created_at' })
   createdAt: Date;
 
