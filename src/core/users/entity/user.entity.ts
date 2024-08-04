@@ -15,7 +15,7 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
+  @Column({ type: 'enum', enum: UserRole })
   type: UserRole;
 
   @Column({ name: 'email_verified' })

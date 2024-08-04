@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ActivedAccountUsecase } from 'src/core/users/usecases/actived-account.usecase';
 import { ActivedAccountApplicationInput } from './interfaces/actived-account.application.interface';
-import { AuthService } from 'src/infra/auth/auth.service';
+import { AuthService } from 'src/presentation/guard/auth.service';
 
 @Injectable()
 export class ActivedAccountApplication {
