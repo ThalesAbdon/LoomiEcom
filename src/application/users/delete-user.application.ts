@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { DeleteUserApplicationInput } from './interfaces/delete-user.application.interface';
 import { FindByIdUserUsecase } from 'src/core/users/usecases/find-by-id-user.usecase';
 import { DeleteUserUsecase } from 'src/core/users/usecases/delete-user.usecase';
@@ -15,7 +15,7 @@ export class DeleteUserApplication {
   ): Promise<Record<string, any>> {
     const user = await this.findByIdUserUseCase.execute(input);
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new NotFoundException('User not found');
     }
     await this.deleteUserUseCase.execute(user.id);
     return { message: 'user deleted!' };

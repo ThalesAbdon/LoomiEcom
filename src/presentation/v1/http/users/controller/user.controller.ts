@@ -69,7 +69,7 @@ export class UserController {
   }
 
   @Get('/:id/:token')
-  async get(
+  async activeAccount(
     @Param()
     input: ActivedAccountDtoInput,
   ): Promise<void> {
@@ -77,6 +77,8 @@ export class UserController {
   }
 
   @Get('/:id')
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   async findById(
     @Param()
     input: FindByIdDtoInput,
@@ -85,6 +87,8 @@ export class UserController {
   }
 
   @Delete('/:id')
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   async deleteUser(
     @Param()
     input: DeleteUserDtoInput,
