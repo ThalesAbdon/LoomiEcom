@@ -7,8 +7,8 @@ import {
 import { VerifyEmailUsecase } from 'src/core/users/usecases/verify-email.usecase';
 import { EmailService } from 'src/infra/mail/service/email.service';
 import { EmailTemplateParams } from 'src/shared/utils/interface/email-template';
-import { AuthService } from 'src/infra/auth/auth.service';
-import { Bcrypt } from 'src/infra/auth/bcrypt';
+import { Bcrypt } from 'src/presentation/guard/bcrypt';
+import { AuthService } from 'src/presentation/guard/auth.service';
 
 @Injectable()
 export class CreateUserApplication {
