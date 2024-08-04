@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -11,19 +12,20 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { CreateUserApplication } from 'src/application/users/create-user.application';
-import {
-  CreateUserDtoInput,
-  CreateUserDtoOutput,
-} from '../dto/create.user.dto';
+import { CreateUserDtoInput, CreateUserDtoOutput } from '../dto/create.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { createPipe } from 'src/shared/utils/create-pipe';
-import { ActivedAccountDtoInput } from '../dto/actived.account.dto';
+import { ActivedAccountDtoInput } from '../dto/actived-account.dto';
 import { ActivedAccountApplication } from 'src/application/users/actived-account.application';
 import { Roles } from 'src/presentation/roles.decorator';
 import { Role } from 'src/presentation/enum/role.enum';
 import { RolesGuard } from 'src/presentation/guard/roles.guard';
-import { LoginUserDtoInput } from '../dto/login.user.dto';
+import { LoginUserDtoInput } from '../dto/login.dto';
 import { LoginUserApplication } from 'src/application/users/login-user.application';
+import { DeleteUserDtoInput } from '../dto/delete.dto';
+import { FindByIdDtoInput } from '../dto/find-by-id.user.dto';
+import { FindByIdUserApplication } from 'src/application/users/find-by-id-user.application';
+import { DeleteUserApplication } from 'src/application/users/delete-user.application';
 
 @Controller({
   path: 'users',
@@ -37,6 +39,10 @@ export class UserController {
     private activedAccountApplication: ActivedAccountApplication,
     @Inject(LoginUserApplication)
     private loginUserApplication: LoginUserApplication,
+    @Inject(DeleteUserApplication)
+    private deleteUserApplication: DeleteUserApplication,
+    @Inject(FindByIdUserApplication)
+    private findByIdUserApplication: FindByIdUserApplication,
   ) {}
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -52,14 +58,6 @@ export class UserController {
     return await this.createUserApplication.execute(input);
   }
 
-  @Get('/:id/:token')
-  async get(
-    @Param()
-    input: ActivedAccountDtoInput,
-  ): Promise<void> {
-    await this.activedAccountApplication.execute(input);
-  }
-
   @Post('/login')
   @UsePipes(createPipe(LoginUserDtoInput))
   @ApiBody({ type: LoginUserDtoInput, required: true })
@@ -68,5 +66,29 @@ export class UserController {
     input: LoginUserDtoInput,
   ): Promise<Record<string, any>> {
     return await this.loginUserApplication.execute(input);
+  }
+
+  @Get('/:id/:token')
+  async get(
+    @Param()
+    input: ActivedAccountDtoInput,
+  ): Promise<void> {
+    await this.activedAccountApplication.execute(input);
+  }
+
+  @Get('/:id')
+  async findById(
+    @Param()
+    input: FindByIdDtoInput,
+  ): Promise<Record<string, any>> {
+    return await this.findByIdUserApplication.execute(input);
+  }
+
+  @Delete('/:id')
+  async deleteUser(
+    @Param()
+    input: DeleteUserDtoInput,
+  ): Promise<Record<string, any>> {
+    return await this.deleteUserApplication.execute(input);
   }
 }

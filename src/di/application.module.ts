@@ -9,11 +9,15 @@ import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/infra/mail/service/email.service';
 import * as bcrypt from 'bcrypt';
 import { LoginUserApplication } from 'src/application/users/login-user.application';
+import { FindByIdUserApplication } from 'src/application/users/find-by-id-user.application';
+import { DeleteUserApplication } from 'src/application/users/delete-user.application';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
   ActivedAccountApplication,
   LoginUserApplication,
+  FindByIdUserApplication,
+  DeleteUserApplication,
   AuthService,
   Bcrypt,
   HttpContext,
