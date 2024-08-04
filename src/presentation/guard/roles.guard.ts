@@ -3,6 +3,7 @@ import {
   CanActivate,
   ExecutionContext,
   Inject,
+  BadRequestException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from '../enum/role.enum';
@@ -27,8 +28,11 @@ export class RolesGuard implements CanActivate {
 
     const { authorization } = context.switchToHttp().getRequest().headers;
     const decoded = await this.authService.checkToken(
-      authorization.split(' ')[1] ?? '',
+      authorization?.split(' ')[1] ?? '',
     );
+    if (!decoded?.user?.emailVerified) {
+      throw new BadRequestException('User not verified!');
+    }
     return requiredRoles.some((role) => decoded?.user?.type === role);
   }
 }

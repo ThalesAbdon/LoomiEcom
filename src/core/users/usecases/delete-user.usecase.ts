@@ -5,13 +5,12 @@ import { DeleteUserUsecaseInput } from '../interfaces/delete.user.usecase.interf
 
 @Injectable()
 export class DeleteUserUsecase
-  implements IUseCase<DeleteUserUsecaseInput, Record<string, any>>
+  implements IUseCase<DeleteUserUsecaseInput, void>
 {
   constructor(
     @Inject(UserRepository) private readonly _userRepository: UserRepository,
   ) {}
-  async execute(input: DeleteUserUsecaseInput): Promise<Record<string, any>> {
-    const user = await this._userRepository.delete(+input);
-    return user;
+  async execute(input: DeleteUserUsecaseInput): Promise<void> {
+    await this._userRepository.delete(+input);
   }
 }
