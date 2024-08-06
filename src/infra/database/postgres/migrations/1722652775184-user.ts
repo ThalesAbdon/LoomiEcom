@@ -12,6 +12,7 @@ export class User1722652775184 implements MigrationInterface {
             type: 'int',
             isPrimary: true,
             isGenerated: true,
+            isUnique: true,
             generationStrategy: 'increment',
             unsigned: true,
           },

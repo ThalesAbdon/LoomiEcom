@@ -16,4 +16,8 @@ export class HttpContext {
       Logger.error(e, 'HttpContext set');
     }
   }
+  getUser(): any {
+    const user = httpContext.get('user');
+    return user;
+  }
 }

@@ -32,7 +32,7 @@ export class Repository<I> {
     return this.repository.delete(id);
   }
 
-  async get(where: Record<string, any>): Promise<unknown> {
+  async get(where: Record<string, any>): Promise<I[]> {
     return this.repository.find({ where: where });
   }
 }

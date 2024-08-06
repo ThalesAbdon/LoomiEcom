@@ -11,6 +11,13 @@ import * as bcrypt from 'bcrypt';
 import { LoginUserApplication } from 'src/application/users/login-user.application';
 import { FindByIdUserApplication } from 'src/application/users/find-by-id-user.application';
 import { DeleteUserApplication } from 'src/application/users/delete-user.application';
+import { CreateClientApplication } from 'src/application/clients/create-client.application';
+import { UpdateUserApplication } from 'src/application/users/update-user.application';
+import { ListUserApplication } from 'src/application/users/list-user.application';
+import { FindByIdClientApplication } from 'src/application/clients/find-by-id-client.application';
+import { UpdateClientApplication } from 'src/application/clients/update-client.application';
+import { DeleteClientApplication } from 'src/application/clients/delete-client.application';
+import { ListClientApplication } from 'src/application/clients/list-client.application';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
@@ -18,6 +25,13 @@ const applicationProviders: Provider[] = [
   LoginUserApplication,
   FindByIdUserApplication,
   DeleteUserApplication,
+  UpdateUserApplication,
+  ListUserApplication,
+  CreateClientApplication,
+  FindByIdClientApplication,
+  UpdateClientApplication,
+  DeleteClientApplication,
+  ListClientApplication,
   AuthService,
   Bcrypt,
   HttpContext,

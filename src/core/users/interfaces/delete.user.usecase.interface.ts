@@ -1,3 +1,3 @@
 export interface DeleteUserUsecaseInput {
-  id: string;
+  id: number;
 }

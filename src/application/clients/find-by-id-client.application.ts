@@ -1,0 +1,19 @@
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { FindByIdClientApplicationInput } from './interfaces/find-by-id-client.application.interface';
+import { FindByIdClientUsecase } from 'src/core/clients/usecases/find-by-id.client.usecase';
+@Injectable()
+export class FindByIdClientApplication {
+  constructor(
+    @Inject(FindByIdClientUsecase)
+    private findByIdClientUseCase: FindByIdClientUsecase,
+  ) {}
+  async execute(
+    input: FindByIdClientApplicationInput,
+  ): Promise<Record<string, any>> {
+    const client = await this.findByIdClientUseCase.execute(input);
+    if (!client?.id) {
+      throw new BadRequestException('Client not found');
+    }
+    return client;
+  }
+}

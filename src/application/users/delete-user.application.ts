@@ -17,7 +17,7 @@ export class DeleteUserApplication {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    await this.deleteUserUseCase.execute(user.id);
+    await this.deleteUserUseCase.execute({ id: user.id });
     return { message: 'user deleted!' };
   }
 }

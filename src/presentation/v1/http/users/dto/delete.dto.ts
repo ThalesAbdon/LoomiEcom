@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class DeleteUserDtoInput {
-  @ApiProperty({ type: String, example: '12' })
-  @IsString()
-  id: string;
+  @ApiProperty({ type: Number, example: 12 })
+  @IsNumber()
+  id: number;
 }
