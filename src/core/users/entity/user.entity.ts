@@ -1,5 +1,6 @@
+import { ClientEntity } from 'src/core/clients/entity/client.entity';
 import { UserRole } from 'src/shared/enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
@@ -27,6 +28,8 @@ export class UserEntity {
   @Column({ name: 'updated_at' })
   updatedAt: Date;
 
+  @OneToOne(() => ClientEntity, (client) => client.user)
+  client: ClientEntity;
   constructor(input: Partial<UserEntity>) {
     Object.assign(this, input);
   }

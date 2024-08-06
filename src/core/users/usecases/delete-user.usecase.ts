@@ -11,6 +11,6 @@ export class DeleteUserUsecase
     @Inject(UserRepository) private readonly _userRepository: UserRepository,
   ) {}
   async execute(input: DeleteUserUsecaseInput): Promise<void> {
-    await this._userRepository.delete(+input);
+    await this._userRepository.delete(input.id);
   }
 }

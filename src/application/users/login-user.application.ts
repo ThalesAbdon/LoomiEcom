@@ -26,7 +26,6 @@ export class LoginUserApplication {
       const token = await this.authService.createToken({ user });
       return { token: token };
     } catch (err) {
-      console.log(err);
       throw new BadRequestException(err.message);
     }
   }

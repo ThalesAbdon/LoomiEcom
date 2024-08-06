@@ -12,7 +12,7 @@ export class FindByIdUserApplication {
     input: FindByIdUserApplicationInput,
   ): Promise<Record<string, any>> {
     const user = await this.findByIdUserUseCase.execute(input);
-    if (user === null) {
+    if (!user?.id) {
       throw new BadRequestException('User not found');
     }
     return user;
