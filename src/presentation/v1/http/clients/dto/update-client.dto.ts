@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsOptional,
@@ -13,6 +14,7 @@ export class UpdateClientDtoInput {
   @IsString()
   @MaxLength(400)
   @IsOptional()
+  @Transform(({ value }) => value.toLowerCase())
   fullName?: string;
 
   @ApiProperty({ type: String, example: '11954771162' })
@@ -26,6 +28,7 @@ export class UpdateClientDtoInput {
   @IsString()
   @MaxLength(600)
   @IsOptional()
+  @Transform(({ value }) => value.toLowerCase())
   address?: string;
 
   @ApiProperty({ type: Boolean, example: true })

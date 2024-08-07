@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { RootModule } from 'src/di/root.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const config = new DocumentBuilder()
@@ -21,6 +22,7 @@ async function bootstrap() {
     .addSecurityRequirements('token')
     .build();
   const app = await NestFactory.create(RootModule);
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

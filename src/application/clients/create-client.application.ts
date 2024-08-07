@@ -26,7 +26,10 @@ export class CreateClientApplication {
 
       return { message: 'Client created! ' };
     } catch (err) {
-      throw new BadRequestException(err.message);
+      if (err.name === 'QueryFailedError') {
+        throw new BadRequestException('Client already exists!');
+      }
+      throw new BadRequestException(err.name);
     }
   }
 }

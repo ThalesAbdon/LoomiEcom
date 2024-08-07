@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsOptional,
   IsString,
@@ -12,20 +13,22 @@ export class ListClientDtoInput {
   @IsString()
   @MaxLength(400)
   @IsOptional()
-  fullName: string;
+  @Transform(({ value }) => value.toLowerCase())
+  fullName?: string;
 
   @ApiProperty({ type: String, example: '11954771162' })
   @IsString()
   @Length(11)
   @Matches('[0-9]')
   @IsOptional()
-  contact: string;
+  contact?: string;
 
   @ApiProperty({ type: String, example: 'Distrito Leste 439' })
   @IsString()
   @MaxLength(600)
   @IsOptional()
-  address: string;
+  @Transform(({ value }) => value.toLowerCase())
+  address?: string;
 }
 
 export class Client {

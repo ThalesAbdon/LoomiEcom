@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import {
   ListUserApplicationInput,
   ListUserApplicationOutput,
@@ -16,6 +16,8 @@ export class ListUserApplication {
     try {
       const users = await this.listUserUseCase.execute(input);
       return { users: users };
-    } catch (error) {}
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

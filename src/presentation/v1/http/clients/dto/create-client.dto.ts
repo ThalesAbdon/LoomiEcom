@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
@@ -12,6 +13,7 @@ export class CreateClientDtoInput {
   @IsString()
   @MaxLength(400)
   @IsNotEmpty()
+  @Transform(({ value }) => value.toLowerCase())
   fullName: string;
 
   @ApiProperty({ type: String, example: '11954771162' })
@@ -25,6 +27,7 @@ export class CreateClientDtoInput {
   @IsString()
   @MaxLength(600)
   @IsNotEmpty()
+  @Transform(({ value }) => value.toLowerCase())
   address: string;
 }
 
