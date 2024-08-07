@@ -18,6 +18,11 @@ import { FindByIdClientApplication } from 'src/application/clients/find-by-id-cl
 import { UpdateClientApplication } from 'src/application/clients/update-client.application';
 import { DeleteClientApplication } from 'src/application/clients/delete-client.application';
 import { ListClientApplication } from 'src/application/clients/list-client.application';
+import { CreateProductApplication } from 'src/application/products/create-product.application';
+import { ListProductApplication } from 'src/application/products/list-product.application';
+import { FindByIdProductApplication } from 'src/application/products/find-by-id-product.application';
+import { UpdateProductApplication } from 'src/application/products/update-product.application';
+import { DeleteProductApplication } from 'src/application/products/delete-product.application';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
@@ -32,6 +37,11 @@ const applicationProviders: Provider[] = [
   UpdateClientApplication,
   DeleteClientApplication,
   ListClientApplication,
+  CreateProductApplication,
+  ListProductApplication,
+  FindByIdProductApplication,
+  UpdateProductApplication,
+  DeleteProductApplication,
   AuthService,
   Bcrypt,
   HttpContext,

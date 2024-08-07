@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
 import { UserRole } from 'src/shared/enum';
 
 export class UpdateUserDtoInput {
@@ -17,6 +12,7 @@ export class UpdateUserDtoInput {
   @ApiProperty({ type: String, example: 'luffy@gmail.com' })
   @IsString()
   @IsOptional()
+  @Transform(({ value }) => value.toLowerCase())
   email?: string;
 
   @ApiProperty({ type: String, example: 'Test*123456' })
@@ -27,7 +23,6 @@ export class UpdateUserDtoInput {
 
   @ApiProperty({ type: String, example: 'client' })
   @IsEnum(UserRole)
-  @IsNotEmpty()
   @IsOptional()
   type?: UserRole;
 }

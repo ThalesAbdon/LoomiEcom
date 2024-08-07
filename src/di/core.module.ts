@@ -13,6 +13,12 @@ import { FindByIdClientUsecase } from 'src/core/clients/usecases/find-by-id.clie
 import { UpdateClientUsecase } from 'src/core/clients/usecases/update-client.usecase';
 import { DeleteClientUsecase } from 'src/core/clients/usecases/delete-client.usecase';
 import { ListClientUsecase } from 'src/core/clients/usecases/list-client.usecase';
+import { CreateProductUsecase } from 'src/core/products/usecases/create-product.usecase';
+import { VerifyProductUsecase } from 'src/core/products/usecases/product-registered.usecase';
+import { ListProductUsecase } from 'src/core/products/usecases/list-product.usecase';
+import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
+import { UpdateProductUsecase } from 'src/core/products/usecases/update-product.usecase';
+import { DeleteProductUsecase } from 'src/core/products/usecases/delete-product.usecase';
 
 export const coreProviders: Provider[] = [
   CreateUserUsecase,
@@ -28,6 +34,12 @@ export const coreProviders: Provider[] = [
   UpdateClientUsecase,
   DeleteClientUsecase,
   ListClientUsecase,
+  CreateProductUsecase,
+  VerifyProductUsecase,
+  ListProductUsecase,
+  FindByIdProductUsecase,
+  UpdateProductUsecase,
+  DeleteProductUsecase,
   InfraModule,
 ];
 

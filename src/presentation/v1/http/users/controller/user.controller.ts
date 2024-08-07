@@ -25,7 +25,7 @@ import { RolesGuard } from 'src/presentation/guard/roles.guard';
 import { LoginUserDtoInput } from '../dto/login.dto';
 import { LoginUserApplication } from 'src/application/users/login-user.application';
 import { DeleteUserDtoInput } from '../dto/delete.dto';
-import { FindByIdDtoInput } from '../dto/find-by-id.user.dto';
+import { FindByIdDtoInput } from '../dto/find-by-id-user.dto';
 import { FindByIdUserApplication } from 'src/application/users/find-by-id-user.application';
 import { DeleteUserApplication } from 'src/application/users/delete-user.application';
 import { UpdateUserDtoInput } from '../dto/update.dto';
