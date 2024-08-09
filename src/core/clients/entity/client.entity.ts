@@ -1,3 +1,4 @@
+import { OrderEntity } from 'src/core/orders/entity/order.entity';
 import { UserEntity } from 'src/core/users/entity/user.entity';
 import {
   Entity,
@@ -5,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('clients')
@@ -36,6 +38,8 @@ export class ClientEntity {
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+  @OneToMany(() => OrderEntity, (order) => order.client)
+  order: OrderEntity[];
   constructor(input: Partial<ClientEntity>) {
     Object.assign(this, input);
   }

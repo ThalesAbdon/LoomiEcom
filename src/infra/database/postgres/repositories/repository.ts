@@ -4,7 +4,12 @@ import {
   DeepPartial,
 } from 'typeorm';
 
-export class Repository<I> {
+class EntityBase {
+  id: number;
+}
+
+export class Repository<I extends EntityBase> {
+  protected relation: string[];
   constructor(
     protected repository: Pick<
       RepositoryTypeorm<I>,
@@ -21,11 +26,14 @@ export class Repository<I> {
   }
 
   async findById(id: any): Promise<any> {
-    return this.repository.findOne(id);
+    return this.repository.findOne({
+      where: { id: id },
+      relations: this.relation,
+    });
   }
 
   async findOne(input: Record<string, any>): Promise<I> {
-    return this.repository.findOne({ where: input });
+    return this.repository.findOne({ where: input, relations: this.relation });
   }
 
   async delete(id: number): Promise<DeleteResult> {
@@ -33,6 +41,6 @@ export class Repository<I> {
   }
 
   async get(where: Record<string, any>): Promise<I[]> {
-    return this.repository.find({ where: where });
+    return this.repository.find({ where: where, relations: this.relation });
   }
 }

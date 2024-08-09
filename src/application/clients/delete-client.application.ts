@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DeleteClientApplicationInput } from './interfaces/delete-client.application.interface';
 import { FindByIdClientUsecase } from 'src/core/clients/usecases/find-by-id.client.usecase';
 import { DeleteClientUsecase } from 'src/core/clients/usecases/delete-client.usecase';
@@ -14,11 +19,15 @@ export class DeleteClientApplication {
   async execute(
     input: DeleteClientApplicationInput,
   ): Promise<Record<string, any>> {
-    const client = await this.findByIdClientUseCase.execute(input);
-    if (!client) {
-      throw new NotFoundException('Client not found');
+    try {
+      const client = await this.findByIdClientUseCase.execute(input);
+      if (!client) {
+        throw new NotFoundException('Client not found');
+      }
+      await this.deleteClientUseCase.execute({ id: client.id });
+      return { message: 'client deleted!' };
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    await this.deleteClientUseCase.execute({ id: client.id });
-    return { message: 'client deleted!' };
   }
 }

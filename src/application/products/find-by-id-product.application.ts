@@ -11,10 +11,14 @@ export class FindByIdProductApplication {
   async execute(
     input: FindByIdProductApplicationInput,
   ): Promise<Record<string, any>> {
-    const product = await this.findByIdProductUseCase.execute(input);
-    if (!product?.id) {
-      throw new BadRequestException('Product not found');
+    try {
+      const product = await this.findByIdProductUseCase.execute(input);
+      if (!product?.id) {
+        throw new BadRequestException('Product not found');
+      }
+      return product;
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    return product;
   }
 }

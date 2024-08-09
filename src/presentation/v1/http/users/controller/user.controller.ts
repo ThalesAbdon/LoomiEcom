@@ -32,7 +32,7 @@ import { UpdateUserDtoInput } from '../dto/update.dto';
 import { UpdateUserApplication } from 'src/application/users/update-user.application';
 import { ListUserDtoInput, ListUserDtoOutput } from '../dto/list.dto';
 import { ListUserApplication } from 'src/application/users/list-user.application';
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from 'src/shared/user-role.enum';
 
 @Controller({
   path: 'users',

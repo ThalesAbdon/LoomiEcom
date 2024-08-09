@@ -23,6 +23,16 @@ import { ListProductApplication } from 'src/application/products/list-product.ap
 import { FindByIdProductApplication } from 'src/application/products/find-by-id-product.application';
 import { UpdateProductApplication } from 'src/application/products/update-product.application';
 import { DeleteProductApplication } from 'src/application/products/delete-product.application';
+import { CreateOrderApplication } from 'src/application/orders/create-order.application';
+import { AddItemApplication } from 'src/application/items/add-item.application';
+import { RemoveItemApplication } from 'src/application/items/remove-item.application';
+import { UpdateItemApplication } from 'src/application/items/update-item.application';
+import { UpdateOrderStatusApplication } from 'src/application/orders/update-order-status.application';
+import { PaymentApplication } from 'src/application/payments/payment.application';
+import { ListOrderApplication } from 'src/application/orders/list-order.application';
+import { DeleteOrderApplication } from 'src/application/orders/delete-order.application';
+import { ListItemApplication } from 'src/application/items/list-item.application';
+import { FindByIdItemApplication } from 'src/application/items/find-by-id-item.application';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
@@ -42,6 +52,16 @@ const applicationProviders: Provider[] = [
   FindByIdProductApplication,
   UpdateProductApplication,
   DeleteProductApplication,
+  CreateOrderApplication,
+  AddItemApplication,
+  RemoveItemApplication,
+  UpdateItemApplication,
+  UpdateOrderStatusApplication,
+  PaymentApplication,
+  ListOrderApplication,
+  DeleteOrderApplication,
+  ListItemApplication,
+  FindByIdItemApplication,
   AuthService,
   Bcrypt,
   HttpContext,

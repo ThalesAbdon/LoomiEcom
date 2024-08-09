@@ -22,7 +22,7 @@ async function bootstrap() {
     .addSecurityRequirements('token')
     .build();
   const app = await NestFactory.create(RootModule);
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

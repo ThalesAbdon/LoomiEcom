@@ -12,10 +12,14 @@ export class ActivedAccountApplication {
   ) {}
 
   async execute(input: ActivedAccountApplicationInput): Promise<void> {
-    const decoded = await this.authService.checkToken(input.token);
-    if (!decoded.user?.id) {
-      throw new BadRequestException('Invalid Token!');
+    try {
+      const decoded = await this.authService.checkToken(input.token);
+      if (!decoded.user?.id) {
+        throw new BadRequestException('Invalid Token!');
+      }
+      await this.activedAccountUseCase.execute({ id: decoded.user.id });
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    await this.activedAccountUseCase.execute({ id: decoded.user.id });
   }
 }

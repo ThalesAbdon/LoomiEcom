@@ -31,8 +31,8 @@ export class UpdateProductApplication {
 
       await this.updateProductUseCase.execute({ id: product.id, ...input });
       return { message: 'Product updated!' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
 }

@@ -31,8 +31,8 @@ export class UpdateClientApplication {
 
       await this.updateClientUseCase.execute({ id: client.id, ...input });
       return { message: 'Client updated!' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
 }

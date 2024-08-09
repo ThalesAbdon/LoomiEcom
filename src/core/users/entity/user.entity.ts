@@ -1,5 +1,6 @@
 import { ClientEntity } from 'src/core/clients/entity/client.entity';
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from 'src/shared/user-role.enum';
+
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 
 @Entity('users')

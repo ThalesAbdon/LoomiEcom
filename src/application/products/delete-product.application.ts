@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
 import { DeleteProductApplicationInput } from './interfaces/delete-product.application.interface';
 import { DeleteProductUsecase } from 'src/core/products/usecases/delete-product.usecase';
@@ -14,11 +19,15 @@ export class DeleteProductApplication {
   async execute(
     input: DeleteProductApplicationInput,
   ): Promise<Record<string, any>> {
-    const product = await this.findByIdProductUseCase.execute(input);
-    if (!product) {
-      throw new NotFoundException('Product not found');
+    try {
+      const product = await this.findByIdProductUseCase.execute(input);
+      if (!product) {
+        throw new NotFoundException('Product not found');
+      }
+      await this.deleteProductUseCase.execute({ id: product.id });
+      return { message: 'Product deleted!' };
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    await this.deleteProductUseCase.execute({ id: product.id });
-    return { message: 'Product deleted!' };
   }
 }

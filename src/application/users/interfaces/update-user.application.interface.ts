@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from 'src/shared/user-role.enum';
 
 export interface UpdateUserApplicationInput {
   name?: string;

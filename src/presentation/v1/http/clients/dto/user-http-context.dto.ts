@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from 'src/shared/user-role.enum';
 
 export interface ClientUserHttpDtoInput {
   id: number;
@@ -6,4 +6,5 @@ export interface ClientUserHttpDtoInput {
   email: string;
   type: UserRole;
   emailVerified: boolean;
+  client: { id: number };
 }

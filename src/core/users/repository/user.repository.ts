@@ -6,6 +6,7 @@ import { Repository } from 'src/infra/database/postgres/repositories/repository'
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
+  protected relation: string[] = ['client'];
   constructor(
     @InjectRepository(UserEntity)
     protected repository: Pick<

@@ -10,10 +10,14 @@ export class FindByIdClientApplication {
   async execute(
     input: FindByIdClientApplicationInput,
   ): Promise<Record<string, any>> {
-    const client = await this.findByIdClientUseCase.execute(input);
-    if (!client?.id) {
-      throw new BadRequestException('Client not found');
+    try {
+      const client = await this.findByIdClientUseCase.execute(input);
+      if (!client?.id) {
+        throw new BadRequestException('Client not found');
+      }
+      return client;
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    return client;
   }
 }
