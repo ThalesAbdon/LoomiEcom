@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   CreateProductApplicationInput,
   CreateProductApplicationOutput,
@@ -26,8 +31,8 @@ export class CreateProductApplication {
       }
       await this.createProductUseCase.execute(input);
       return { message: 'Product created! ' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

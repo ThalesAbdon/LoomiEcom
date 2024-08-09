@@ -3,18 +3,18 @@ import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDtoInput {
-  @ApiProperty({ type: String, example: 'Luffy' })
+  @ApiProperty({ type: String, example: 'SeuNome' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ type: String, example: 'luffy@gmail.com' })
+  @ApiProperty({ type: String, example: 'seuemail@gmail.com' })
   @IsString()
   @IsNotEmpty()
   @Transform(({ value }) => value.toLowerCase())
   email: string;
 
-  @ApiProperty({ type: String, example: 'Test*123456' })
+  @ApiProperty({ type: String, example: '12345678' })
   @IsString()
   @MinLength(6)
   @IsNotEmpty()

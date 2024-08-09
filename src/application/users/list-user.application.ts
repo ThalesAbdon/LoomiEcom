@@ -1,4 +1,8 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   ListUserApplicationInput,
   ListUserApplicationOutput,
@@ -17,7 +21,7 @@ export class ListUserApplication {
       const users = await this.listUserUseCase.execute(input);
       return { users: users };
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new InternalServerErrorException(error);
     }
   }
 }

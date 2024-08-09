@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { FindByIdOrderUsecase } from 'src/core/orders/usecases/find-by-id-order.usecase';
@@ -27,7 +27,7 @@ export class DeleteOrderApplication {
       await this.deleteOrderUseCase.execute({ id: order.id });
       return { message: 'order deleted!' };
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

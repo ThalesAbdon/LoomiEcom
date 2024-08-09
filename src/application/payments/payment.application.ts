@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ListItemUsecase } from 'src/core/items/usecases/list-item.usecase';
 import { UpdateOrderStatusUsecase } from 'src/core/orders/usecases/update-order-status.usecase';
 import { PaymentUsecase } from 'src/core/payments/payment.usecase';
@@ -58,7 +63,7 @@ export class PaymentApplication {
 
       return data;
     } catch (error) {
-      throw new BadRequestException('Payment proccess fail');
+      throw new InternalServerErrorException('Payment proccess fail');
     }
   }
 }

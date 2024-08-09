@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { FindByIdClientUsecase } from 'src/core/clients/usecases/find-by-id.client.usecase';
 import { UpdateClientUsecase } from 'src/core/clients/usecases/update-client.usecase';
 import { FindByIdClientApplicationInput } from './interfaces/find-by-id-client.application.interface';
@@ -32,7 +37,7 @@ export class UpdateClientApplication {
       await this.updateClientUseCase.execute({ id: client.id, ...input });
       return { message: 'Client updated!' };
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

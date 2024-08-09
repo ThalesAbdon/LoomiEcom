@@ -6,6 +6,8 @@ import {
 
 class EntityBase {
   id: number;
+  createdAt?: Date;
+  updatedAt: Date;
 }
 
 export class Repository<I extends EntityBase> {
@@ -22,6 +24,7 @@ export class Repository<I extends EntityBase> {
   }
 
   async update(id: number, input: DeepPartial<I>): Promise<I> {
+    input.updatedAt = new Date();
     return this.repository.save({ id, ...input });
   }
 

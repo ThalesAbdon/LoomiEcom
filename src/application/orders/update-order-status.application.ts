@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   UpdateOrderStatusApplicationInput,
   UpdateOrderStatusApplicationOutput,
@@ -32,7 +37,7 @@ export class UpdateOrderStatusApplication {
       return { message: 'Order updated!' };
     } catch (err) {
       console.log(err);
-      throw new BadRequestException(err.message);
+      throw new InternalServerErrorException(err.message);
     }
   }
 }

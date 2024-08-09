@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import {
@@ -67,8 +67,8 @@ export class AddItemApplication {
         total: order.total + subtotal,
       });
       return { message: 'Item added!' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
   }
 }
