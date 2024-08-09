@@ -11,10 +11,14 @@ export class FindByIdUserApplication {
   async execute(
     input: FindByIdUserApplicationInput,
   ): Promise<Record<string, any>> {
-    const user = await this.findByIdUserUseCase.execute(input);
-    if (!user?.id) {
-      throw new BadRequestException('User not found');
+    try {
+      const user = await this.findByIdUserUseCase.execute(input);
+      if (!user?.id) {
+        throw new BadRequestException('User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    return user;
   }
 }

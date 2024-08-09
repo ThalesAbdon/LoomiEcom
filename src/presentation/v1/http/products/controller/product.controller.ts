@@ -71,7 +71,6 @@ export class ProductController {
     @Query()
     input: ListProductDtoInput,
   ): Promise<ListProductDtoOutput> {
-    console.log(input);
     return await this.listProductApplication.execute(input);
   }
 
@@ -104,7 +103,6 @@ export class ProductController {
     @Param()
     input: DeleteProductDtoInput,
   ): Promise<Record<string, any>> {
-    console.log(input);
     return await this.deleteProductApplication.execute(input);
   }
 }

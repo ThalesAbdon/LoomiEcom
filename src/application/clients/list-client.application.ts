@@ -17,7 +17,7 @@ export class ListClientApplication {
       const clients = await this.listClientUseCase.execute(input);
       return { clients: clients };
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from 'src/shared/user-role.enum';
 
 export class UpdateUserDtoInput {
   @ApiProperty({ type: String, example: 'Luffy' })

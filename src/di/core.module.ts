@@ -19,6 +19,19 @@ import { ListProductUsecase } from 'src/core/products/usecases/list-product.usec
 import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
 import { UpdateProductUsecase } from 'src/core/products/usecases/update-product.usecase';
 import { DeleteProductUsecase } from 'src/core/products/usecases/delete-product.usecase';
+import { CreateOrderUsecase } from 'src/core/orders/usecases/create-order.usecase';
+import { UpdateOrderUsecase } from 'src/core/orders/usecases/update-order.usecase';
+
+import { FindByIdOrderUsecase } from 'src/core/orders/usecases/find-by-id-order.usecase';
+import { AddItemUsecase } from 'src/core/items/usecases/add-item.usecase';
+import { RemoveItemUsecase } from 'src/core/items/usecases/remove-item.usecase';
+import { FindByIdItemUsecase } from 'src/core/items/usecases/find-by-id-item.usecase';
+import { UpdateItemUsecase } from 'src/core/items/usecases/update-item.usecase';
+import { UpdateOrderStatusUsecase } from 'src/core/orders/usecases/update-order-status.usecase';
+import { PaymentUsecase } from 'src/core/payments/payment.usecase';
+import { ListItemUsecase } from 'src/core/items/usecases/list-item.usecase';
+import { ListOrderUsecase } from 'src/core/orders/usecases/list-order.usecase';
+import { DeleteOrderUsecase } from 'src/core/orders/usecases/delete-order.usecase';
 
 export const coreProviders: Provider[] = [
   CreateUserUsecase,
@@ -40,6 +53,21 @@ export const coreProviders: Provider[] = [
   FindByIdProductUsecase,
   UpdateProductUsecase,
   DeleteProductUsecase,
+  CreateOrderUsecase,
+  UpdateOrderUsecase,
+  CreateUserUsecase,
+  FindByIdOrderUsecase,
+  AddItemUsecase,
+  RemoveItemUsecase,
+  FindByIdItemUsecase,
+  UpdateItemUsecase,
+  UpdateOrderStatusUsecase,
+  DeleteOrderUsecase,
+  ListItemUsecase,
+  ListOrderUsecase,
+  ListItemUsecase,
+  PaymentUsecase,
+  FindByIdItemUsecase,
   InfraModule,
 ];
 

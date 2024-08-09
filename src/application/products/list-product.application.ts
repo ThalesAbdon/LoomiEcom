@@ -15,9 +15,10 @@ export class ListProductApplication {
   ): Promise<ListProductApplicationOutput> {
     try {
       const products = await this.listProductUseCase.execute(input);
+
       return { products: products };
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message);
     }
   }
 }

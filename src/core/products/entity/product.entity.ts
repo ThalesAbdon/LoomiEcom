@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ItemEntity } from 'src/core/items/entity/item.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('products')
 export class ProductEntity {
@@ -11,7 +12,7 @@ export class ProductEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column('decimal', { precision: 6, scale: 2 })
   price: number;
 
   @Column({ name: 'quantity_stock' })
@@ -23,6 +24,8 @@ export class ProductEntity {
   @Column({ name: 'updated_at' })
   updatedAt: Date;
 
+  @OneToMany(() => ItemEntity, (item) => item.product)
+  items: ItemEntity[];
   constructor(input: Partial<ProductEntity>) {
     Object.assign(this, input);
   }
