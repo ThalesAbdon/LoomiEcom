@@ -1,4 +1,8 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { LoginUserUsecase } from 'src/core/users/usecases/login-user.usecase';
 import { Bcrypt } from 'src/presentation/guard/bcrypt';
 import { AuthService } from 'src/presentation/guard/auth.service';
@@ -26,7 +30,7 @@ export class LoginUserApplication {
       const token = await this.authService.createToken({ user });
       return { token: token };
     } catch (err) {
-      throw new BadRequestException(err.message);
+      throw new InternalServerErrorException(err.message);
     }
   }
 }

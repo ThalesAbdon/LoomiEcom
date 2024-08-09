@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { FindByIdItemUsecase } from 'src/core/items/usecases/find-by-id-item.usecase';
 import { FindByIdItemApplicationInput } from './interfaces/find-by-id-item.application.interface';
 
@@ -18,7 +23,7 @@ export class FindByIdItemApplication {
       }
       return item;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import {
@@ -65,8 +65,8 @@ export class CreateOrderApplication {
       }
       await this.updateOrderUseCase.execute({ id: order.id, total: total });
       return { message: 'ORDER PLACED SUCESSFULLY!' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

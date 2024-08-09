@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { DeleteClientApplicationInput } from './interfaces/delete-client.application.interface';
@@ -27,7 +27,7 @@ export class DeleteClientApplication {
       await this.deleteClientUseCase.execute({ id: client.id });
       return { message: 'client deleted!' };
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

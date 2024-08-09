@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import {
@@ -46,7 +46,7 @@ export class RemoveItemApplication {
       });
       return { message: 'Item removed!' };
     } catch (err) {
-      throw new BadRequestException(err.message);
+      throw new InternalServerErrorException(err.message);
     }
   }
 }

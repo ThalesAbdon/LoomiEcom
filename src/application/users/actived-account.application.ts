@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ActivedAccountUsecase } from 'src/core/users/usecases/actived-account.usecase';
 import { ActivedAccountApplicationInput } from './interfaces/actived-account.application.interface';
 import { AuthService } from 'src/presentation/guard/auth.service';
@@ -19,7 +24,7 @@ export class ActivedAccountApplication {
       }
       await this.activedAccountUseCase.execute({ id: decoded.user.id });
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

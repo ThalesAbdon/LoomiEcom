@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateUserUsecase } from 'src/core/users/usecases/create-user.usecase';
 import {
   CreateUserApplicationInput,
@@ -43,7 +48,7 @@ export class CreateUserApplication {
         return { message: 'you will shortly receive registration email' };
       }
     } catch (err) {
-      throw new BadRequestException(err.message);
+      throw new InternalServerErrorException(err.message);
     }
   }
 }

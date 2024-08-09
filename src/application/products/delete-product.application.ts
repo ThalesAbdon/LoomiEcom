@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
@@ -27,7 +27,7 @@ export class DeleteProductApplication {
       await this.deleteProductUseCase.execute({ id: product.id });
       return { message: 'Product deleted!' };
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

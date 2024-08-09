@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   UpdateUserApplicationInput,
   UpdateUserApplicationOutput,
@@ -31,8 +36,8 @@ export class UpdateUserApplication {
         throw new BadRequestException('Not field to update');
       await this.updateUserUseCase.execute({ id: user.id, ...input });
       return { message: 'User updated!' };
-    } catch (err) {
-      throw new BadRequestException(err.message);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

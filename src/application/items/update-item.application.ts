@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 
@@ -16,6 +17,7 @@ import {
   UpdateItemApplicationOutput,
 } from './interfaces/update-item.application.interface';
 import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
+import { OrderStatus } from 'src/shared/order-status.enum';
 
 @Injectable()
 export class UpdateItemApplication {
@@ -46,17 +48,20 @@ export class UpdateItemApplication {
       if (input.quantity > product.quantityStock) {
         throw new NotFoundException('OUT OF STOCK!');
       }
-      const updatedItem = await this.updateItemUsecase.execute({
-        id: item.id,
-        quantity: input.quantity,
-        subtotal: input.quantity * item.pricePerUnit,
-      });
       const order = await this.findByIdOrderUsecase.execute({
         id: item.orderId,
       });
       if (!order?.id) {
         throw new NotFoundException('Order not found!');
       }
+      if (order.status != OrderStatus.received) {
+        throw new BadRequestException(`Order already ${order.status}`);
+      }
+      const updatedItem = await this.updateItemUsecase.execute({
+        id: item.id,
+        quantity: input.quantity,
+        subtotal: input.quantity * item.pricePerUnit,
+      });
       const updatedTotal = order.total - item.subtotal + updatedItem.subtotal;
       await this.updateOrderUsecase.execute({
         id: order.id,
@@ -64,8 +69,7 @@ export class UpdateItemApplication {
       });
       return { message: 'Item updated!' };
     } catch (err) {
-      console.log(err);
-      throw new BadRequestException(err.message);
+      throw new InternalServerErrorException(err.message);
     }
   }
 }

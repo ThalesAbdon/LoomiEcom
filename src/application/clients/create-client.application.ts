@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateClientUsecase } from 'src/core/clients/usecases/create-client.usecase';
 import {
   CreateClientApplicationInput,
@@ -25,11 +30,11 @@ export class CreateClientApplication {
       });
 
       return { message: 'Client created! ' };
-    } catch (err) {
-      if (err.name === 'QueryFailedError') {
+    } catch (error) {
+      if (error.name === 'QueryFailedError') {
         throw new BadRequestException('Client already exists!');
       }
-      throw new BadRequestException(err.name);
+      throw new InternalServerErrorException(error.message);
     }
   }
 }
