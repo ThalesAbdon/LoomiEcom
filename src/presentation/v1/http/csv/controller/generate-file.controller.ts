@@ -39,7 +39,6 @@ export class FileController {
     const csv = await json2csv(report, {
       delimiter: { field: ';', eol: '\n' },
     });
-    console.log(csv);
     return `\uFEFF${csv}`;
   }
 }

@@ -12,7 +12,6 @@ export class UpdateOrderStatusUsecase
     private readonly orderRepository: OrderRepository,
   ) {}
   async execute(input: UpdateOrderStatusUsecaseInput): Promise<void> {
-    console.log(input);
     await this.orderRepository.update(input.id, { ...input });
   }
 }

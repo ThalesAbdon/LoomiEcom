@@ -97,11 +97,7 @@ export class UserController {
     @Body()
     input: LoginUserDtoInput,
   ): Promise<Record<string, any>> {
-    try {
-      return await this.loginUserApplication.execute(input);
-    } catch (err) {
-      console.log(err);
-    }
+    return await this.loginUserApplication.execute(input);
   }
 
   @Get('/:id/:token')

@@ -13,7 +13,6 @@ export class UpdateOrderUsecase
     private readonly orderRepository: OrderRepository,
   ) {}
   async execute(input: UpdateOrderUsecaseInput): Promise<void> {
-    console.log(input);
     await this.orderRepository.update(input.id, { ...input });
   }
 }
