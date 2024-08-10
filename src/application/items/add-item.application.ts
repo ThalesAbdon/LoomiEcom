@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -13,6 +14,7 @@ import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-produ
 import { FindByIdOrderUsecase } from 'src/core/orders/usecases/find-by-id-order.usecase';
 import { UpdateOrderUsecase } from 'src/core/orders/usecases/update-order.usecase';
 import { ListItemUsecase } from 'src/core/items/usecases/list-item.usecase';
+import { OrderStatus } from 'src/shared/order-status.enum';
 
 @Injectable()
 export class AddItemApplication {
@@ -61,6 +63,9 @@ export class AddItemApplication {
       });
       if (!order?.id) {
         throw new NotFoundException('Order not found!');
+      }
+      if (order.status != OrderStatus.received) {
+        throw new BadRequestException(`Order already ${order.status}`);
       }
       await this.updateOrderUseCase.execute({
         id: input.orderId,

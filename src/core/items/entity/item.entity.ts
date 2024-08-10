@@ -22,7 +22,7 @@ export class ItemEntity {
   @Column()
   quantity: number;
 
-  @Column({ name: 'price_per_unit' })
+  @Column('decimal', { name: 'price_per_unit', precision: 6, scale: 2 })
   pricePerUnit: number;
 
   @Column('decimal', { precision: 6, scale: 2 })

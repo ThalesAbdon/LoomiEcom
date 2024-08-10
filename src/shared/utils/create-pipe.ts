@@ -13,3 +13,10 @@ export function createPipeParam(dto) {
     { param: dto },
   );
 }
+
+export function createPipeQuery(dto) {
+  return new AbstractValidationPipe(
+    { whitelist: true, transform: true },
+    { query: dto },
+  );
+}

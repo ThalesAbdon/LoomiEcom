@@ -9,21 +9,21 @@ import {
 } from 'class-validator';
 
 export class ListClientDtoInput {
-  @ApiProperty({ type: String, example: 'Son Goku' })
+  @ApiProperty({ type: String, required: false, example: 'Son Goku' })
   @IsString()
   @MaxLength(400)
   @IsOptional()
   @Transform(({ value }) => value.toLowerCase())
   fullName?: string;
 
-  @ApiProperty({ type: String, example: '11954771162' })
+  @ApiProperty({ type: String, required: false, example: '11954771162' })
   @IsString()
   @Length(11)
   @Matches('[0-9]')
   @IsOptional()
   contact?: string;
 
-  @ApiProperty({ type: String, example: 'Distrito Leste 439' })
+  @ApiProperty({ type: String, required: false, example: 'Distrito Leste 439' })
   @IsString()
   @MaxLength(600)
   @IsOptional()

@@ -12,6 +12,6 @@ export class Bcrypt {
   }
 
   compare(data: any, hash: string) {
-    return bcrypt.compareSync(data, hash);
+    return bcrypt.compare(data, hash);
   }
 }

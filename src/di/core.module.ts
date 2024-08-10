@@ -28,10 +28,11 @@ import { RemoveItemUsecase } from 'src/core/items/usecases/remove-item.usecase';
 import { FindByIdItemUsecase } from 'src/core/items/usecases/find-by-id-item.usecase';
 import { UpdateItemUsecase } from 'src/core/items/usecases/update-item.usecase';
 import { UpdateOrderStatusUsecase } from 'src/core/orders/usecases/update-order-status.usecase';
-import { PaymentUsecase } from 'src/core/payments/payment.usecase';
+
 import { ListItemUsecase } from 'src/core/items/usecases/list-item.usecase';
 import { ListOrderUsecase } from 'src/core/orders/usecases/list-order.usecase';
 import { DeleteOrderUsecase } from 'src/core/orders/usecases/delete-order.usecase';
+import { PaymentUsecase } from 'src/core/payments/usecases/payment.usecase';
 
 export const coreProviders: Provider[] = [
   CreateUserUsecase,

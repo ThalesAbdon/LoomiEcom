@@ -1,12 +1,34 @@
-export interface ListItemDtoInput {
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumberString } from 'class-validator';
+
+export class ListItemDtoInput {
+  @ApiProperty({ type: Number, required: false, example: 1 })
+  @IsNumberString()
+  @IsNotEmpty()
   orderId?: number;
+
+  @ApiProperty({ type: Number, required: false, example: 1 })
+  @IsNumberString()
+  @IsNotEmpty()
   productId?: number;
+
+  @ApiProperty({ type: Number, required: false, example: 1 })
+  @IsNumberString()
+  @IsNotEmpty()
   quantity?: number;
+
+  @ApiProperty({ type: Number, required: false, example: 1 })
+  @IsNumberString()
+  @IsNotEmpty()
   pricePerUnit?: number;
+
+  @ApiProperty({ type: Number, required: false, example: 1 })
+  @IsNumberString()
+  @IsNotEmpty()
   subtotal?: number;
 }
 
-export interface Item {
+export class Item {
   id: number;
   orderId: number;
   productId: number;

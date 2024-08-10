@@ -6,7 +6,8 @@ import {
 } from '@nestjs/common';
 import { ListItemUsecase } from 'src/core/items/usecases/list-item.usecase';
 import { UpdateOrderStatusUsecase } from 'src/core/orders/usecases/update-order-status.usecase';
-import { PaymentUsecase } from 'src/core/payments/payment.usecase';
+import { PaymentUsecase } from 'src/core/payments/usecases/payment.usecase';
+
 import { FindByIdProductUsecase } from 'src/core/products/usecases/find-by-product.usecase';
 import { UpdateProductUsecase } from 'src/core/products/usecases/update-product.usecase';
 import { OrderStatus } from 'src/shared/order-status.enum';

@@ -1,3 +1,4 @@
+import { ItemEntity } from 'src/core/items/entity/item.entity';
 import { OrderStatus } from 'src/shared/order-status.enum';
 
 export interface ListOrderUsecaseInput {
@@ -13,6 +14,7 @@ export interface Order {
   total: number;
   orderDate: Date;
   updatedAt: Date;
+  item?: ItemEntity[];
 }
 
 export interface ListOrderUsecaseOutput {

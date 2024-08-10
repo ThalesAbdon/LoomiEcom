@@ -6,7 +6,7 @@ Este é um desafio para testar minhas habilidades na construção de APIs. O obj
 
 ## Conteúdo
 - [Instalação e Execução](#instalação-e-execução)
-- [Postgres Admin](#postegres-admin)
+- [Postgres](#postegres)
 - [Testes da API](#testes-da-api)
 - [Features](#features)
     - 1.1 [Criar um usuario](#user)
@@ -18,20 +18,21 @@ Este é um desafio para testar minhas habilidades na construção de APIs. O obj
     - 1.7 [Listar Clientes e filtrá-los](#listar)
     - 1.7 [Criar um Produto](#produto)
     - 1.8 [Editar um Produto](#produto)
-    - 1.9 [Deletar um Produto](#deletar)
-    - 2.0 [Listar todos os Produtos](#listar)
-    - 2.1 [Listar Produtos e filtrá-los](#listar)
+    - 1.9 [Deletar Produto](#deletar-produto)
+    - 2.0 [Listar todos os Produtos](#deletar-produto)
+    - 2.1 [Listar Produtos e filtrá-los](#deletar-produto)
     - 2.2 [Criar um Pedido](#pedido)
     - 2.3 [Editar um Pedido](#pedido)
-    - 2.4 [Deletar um Pedido](#deletar)
+    - 2.4 [Deletar Pedido](#deletar-pedido)
     - 2.5 [Listar todos os Pedidos](#listar)
     - 2.6 [Listar Pedidos e filtrá-los](#listar)
     - 2.7 [Criar um Item](#item)
     - 2.8 [Editar um Item](#item)
     - 2.9 [Deletar um Item](#deletar)
-    - 3.0 [Listar todos os Items](#listar)
+    - 3.0 [Listar todos os Items](#listar-item)
     - 3.1 [Listar Items e filtrá-los](#listar)
-- [Arquitetura](#arquitetura)
+    - 3.1 [Pagamento](#pagamento)
+
 
 
 ## Instalação e Execução
@@ -62,69 +63,16 @@ Verifique as variavéis de ambiente no arquivo
 ```
 ### 4. Execute o script do Docker
 ```
-sudo docker compose up
+sudo docker compose --env-file .env up -d
 ```
-depois, dê control + C para encerrar o programa
+depois, dê control + C para encerrar o programa e para dar um shutdown no docker:
 
-## Depois da primeira vez, não é necessário mais utilizar o docker compose up!
+```
+sudo docker docker compose down
+```
 
-### 5. Container Id
-  Primeiro, vamos verificar os id dos containers
-  ```
-  $sudo docker ps -a
-  ```
-### 6. Rodar novamente
-  Agora, para rodar novamente o programa, basta dar um:
-  ```
-  $sudo docker start id_container1 id_container2 id_container3
-  ```
 
-### 7. Parar a execução  
-  Quando quiser parar o sistema, basta dar um:
-   ```
-  $sudo docker stop id_container1 id_container2 id_container3
-  ```
  
-# Postegres (DBeaver)
-  ## A partir daqui, estou considerando a utilização das variavéis de ambiente que estão no arquivo: ```.env.example```.
-  
-  ###Sinta-se a vontade para utilizar a ferramenta de administração de banco de dados que quiser!
-  ### 1. Acesso ao PGAdmin4
-  No navegador e Com o projeto rodando, acesse
-  ```
-  http://localhost:5050/
-  ```
-  ### 2. Login
-  Como default temos:
-  ```Email: admin@admin.com``` e 
-  ```Password: root```
-  Basta clicar em Login
-
-  ![Interface de login do PgAdmin4](images/Pgadmin-login.png)
-  
-  ### 3. Servidor
-  Provavelmente, quando logar, não haverá um servidor, então clique em adicionar novo servidor
-
-  ![Servidor ](images/add-server.png)
-
-  ### 4. Configurando Servidor
-  Na aba geral, tudo que precisa colocar o campo nome ( pode ser qualquer nome, coloquei o nome do projeto place-hub) 
-
-    
-  ![Aba General](images/general.png)
-
-
-  Na aba Conexão, é necessário colocar o campo
-  - Host name/address: ```localhost```
-  - Username: ```root```
-  - Senha: ```root```
-
-  ![Aba conexão](images/connections.png)
-
-  Agora, basta clicar em Salvar
-
-  ### 5. Banco criado
-  ![database](images/database.png)
 
 ## Testes da API
   Para testar, podemos usar o swagger:
@@ -142,6 +90,10 @@ depois, dê control + C para encerrar o programa
   }
   ```
 # Features
+##Existe uma rota para o swagger: ```http://localhost:3000/api``` 
+###porém segue abaixo algumas das funcionalidades.
+
+
 ## User
   -  Gerenciamento autenticação de usuários.
   
@@ -191,7 +143,7 @@ Também implementei end-points para:
   - Atualizar um usuário
   - Deletar um usuário
 
-## Client
+## Cliente
   - Um usuário do tipo Client pode criar sua conta cliente.
   
   - É Necessário estar autenticado.
@@ -248,6 +200,68 @@ Também implementei end-points para:
    ```http://localhost:3000/clients/:id``` 
    
   - É necessário colocar um id válido! 
+## Produto
+  - Um usuário do tipo ADMIN tem acesso total aos endpoints de produto.
+
+  - Um usuário do tipo CLIENT só tem acesso ao end point de ver produtos, afinal de contas: nosso cliente pode fazer um pedido.
+  
+  - É Necessário estar autenticado.
+  
+  - O Produto é inserido no banco de dados exclusivo para armazenar produtos.
+
+### Criar
+  - Para criar um Produto, utilizamos uma rota POST
+   ```http://localhost:3000/products``` 
+   
+   Com o seguinte json:
+
+    {
+     "products": {
+        "name": "Arroz",
+        "description": "Arroz é muito bom!",
+        "price": 8.25,
+        "quantityStock": 100
+      }
+    }
+
+### Editar
+  - Um Produto pode ser editado, utilizamos uma rota PATCH
+   ```http://localhost:3000/products/:id``` 
+
+  - É necessário colocar um id válido! 
+
+  - Lembrando que esse endpoint possui 4 campos OPCIONAIS
+
+   Com o seguinte json:
+
+    {
+      "name": "Arroz",
+      "description": "Arroz é muito bom!",
+      "price": 8.25,
+      "quantityStock": 100
+    }
+
+### Deletar Produto
+  - Para deletar um Produto, utilizamos uma rota DELETE
+   ```http://localhost:3000/products/:id``` 
+   
+  - É necessário colocar um id válido! 
+
+### Listar Item
+  - Para listar todos os Produtos, utilizamos uma rota GET:
+   ```http://localhost:3000/products``` 
+   
+  - Se não tiver nenhum parametro, então o retorno será de todos os produtos!
+
+  - Também é possível listar por parametros, por exemplo: encontrar todos os produtos que sejam do mesmo preço
+     ```http://localhost:3000/produtoss?price=8``` 
+
+### Encontrar Produto por um id 
+   - Para buscar um produto pelo id, utilizamos uma rota GET:
+   ```http://localhost:3000/products/:id``` 
+   
+  - É necessário colocar um id válido!
+
 ## Pedido
   - Um usuário do tipo ADMIN tem acesso total aos endpoints de pedido.
 
@@ -284,13 +298,13 @@ Também implementei end-points para:
     "status": "refused"
     }
 
-### Deletar
+### Deletar Pedido
   - Para deletar um Pedido, utilizamos uma rota DELETE
    ```http://localhost:3000/orders/:id``` 
    
   - É necessário colocar um id válido! 
 
-### Listar
+### Listar Item
   - Para listar todos os Pedidos, utilizamos uma rota GET:
    ```http://localhost:3000/orders``` 
    
@@ -359,6 +373,9 @@ Também implementei end-points para:
    
   - É necessário colocar um id válido!   
 
-## Arquitetura
+## Pagamento
+
+  - Existe uma rota para simular um serviço de pagamento, assim podemos alterar o status do pedido.
+  ```http://localhost:3000/payments/process-payment```
 
 

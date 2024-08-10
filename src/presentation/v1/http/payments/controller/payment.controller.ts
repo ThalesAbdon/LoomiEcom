@@ -12,8 +12,12 @@ import { RolesGuard } from 'src/presentation/guard/roles.guard';
 import { Roles } from 'src/presentation/roles.decorator';
 import { createPipe } from 'src/shared/utils/create-pipe';
 import { PaymentDtoInput } from '../dto/payment.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('payments')
+@Controller({
+  path: 'payments',
+})
+@ApiTags('payment')
 export class PaymentController {
   constructor(
     @Inject(PaymentApplication)

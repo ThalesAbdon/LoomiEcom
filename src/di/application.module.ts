@@ -33,6 +33,7 @@ import { ListOrderApplication } from 'src/application/orders/list-order.applicat
 import { DeleteOrderApplication } from 'src/application/orders/delete-order.application';
 import { ListItemApplication } from 'src/application/items/list-item.application';
 import { FindByIdItemApplication } from 'src/application/items/find-by-id-item.application';
+import { GenerateFileApplication } from 'src/application/file/generate-file.application';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
@@ -62,6 +63,7 @@ const applicationProviders: Provider[] = [
   DeleteOrderApplication,
   ListItemApplication,
   FindByIdItemApplication,
+  GenerateFileApplication,
   AuthService,
   Bcrypt,
   HttpContext,
