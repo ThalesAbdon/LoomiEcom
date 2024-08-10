@@ -18,14 +18,30 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:create": "npm run typeorm -- migration:create ./src/infra/database/postgres/migrations/$npm_config_name",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/infra/database/postgres/typeOrm.migration-config.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d ./src/infra/database/postgres/typeOrm.migration-config.ts"
   },
   "dependencies": {
+    "@emailjs/nodejs": "^4.0.4",
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.4.0",
+    "@nestjs/typeorm": "^10.0.2",
+    "bcrypt": "^5.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "express-http-context": "^1.2.4",
+    "json-2-csv": "^5.5.5",
+    "pg": "^8.12.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
@@ -64,9 +80,12 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
+   "collectCoverageFrom": [
+    "core/**/usecases/*.{js,jsx,ts,tsx}"
     ],
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/../src/$1"
+    },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
