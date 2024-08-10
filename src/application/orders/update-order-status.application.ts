@@ -36,7 +36,6 @@ export class UpdateOrderStatusApplication {
       });
       return { message: 'Order updated!' };
     } catch (err) {
-      console.log(err);
       throw new InternalServerErrorException(err.message);
     }
   }
