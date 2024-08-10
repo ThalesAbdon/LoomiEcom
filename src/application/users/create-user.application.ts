@@ -14,6 +14,7 @@ import { EmailService } from 'src/infra/mail/service/email.service';
 import { EmailTemplateParams } from 'src/shared/utils/interface/email-template';
 import { Bcrypt } from 'src/presentation/guard/bcrypt';
 import { AuthService } from 'src/presentation/guard/auth.service';
+import { Request } from 'express';
 
 @Injectable()
 export class CreateUserApplication {
@@ -26,6 +27,7 @@ export class CreateUserApplication {
   ) {}
   async execute(
     input: CreateUserApplicationInput,
+    req: Request,
   ): Promise<CreateUserApplicationOutput> {
     try {
       const emailAlreadyRegistered = await this.verifyEmailUsecase.execute({
@@ -38,7 +40,7 @@ export class CreateUserApplication {
       const user = await this.createUserUseCase.execute(input);
       delete user.password;
       const token = await this.authService.createToken({ user: user });
-      const link = `${process.env.BASE_URL}/users/${user.id}/${token}`;
+      const link = `http://${req.headers.host}/users/${user.id}/${token}`;
       const mailData: EmailTemplateParams = {
         to_name: user.name,
         to_email: user.email,

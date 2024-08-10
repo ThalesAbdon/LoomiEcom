@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
   UseInterceptors,
   UsePipes,
@@ -33,6 +34,7 @@ import { UpdateUserApplication } from 'src/application/users/update-user.applica
 import { ListUserDtoInput, ListUserDtoOutput } from '../dto/list.dto';
 import { ListUserApplication } from 'src/application/users/list-user.application';
 import { UserRole } from 'src/shared/user-role.enum';
+import { Request } from 'express';
 
 @Controller({
   path: 'users',
@@ -63,12 +65,14 @@ export class UserController {
   @UsePipes(createPipe(CreateUserDtoInput))
   @ApiBody({ type: CreateUserDtoInput, required: true })
   async createAdmin(
+    @Req()
+    req: Request,
     @Body()
     input: CreateUserDtoInput,
   ): Promise<CreateUserDtoOutput> {
     const type = { type: UserRole.ADMIN };
     const combined = { ...input, ...type };
-    return await this.createUserApplication.execute(combined);
+    return await this.createUserApplication.execute(combined, req);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -76,12 +80,14 @@ export class UserController {
   @UsePipes(createPipe(CreateUserDtoInput))
   @ApiBody({ type: CreateUserDtoInput, required: true })
   async createClient(
+    @Req()
+    req: Request,
     @Body()
     input: CreateUserDtoInput,
   ): Promise<CreateUserDtoOutput> {
     const type = { type: UserRole.CLIENT };
     const combined = { ...input, ...type };
-    return await this.createUserApplication.execute(combined);
+    return await this.createUserApplication.execute(combined, req);
   }
 
   @Post('/login')
@@ -91,7 +97,11 @@ export class UserController {
     @Body()
     input: LoginUserDtoInput,
   ): Promise<Record<string, any>> {
-    return await this.loginUserApplication.execute(input);
+    try {
+      return await this.loginUserApplication.execute(input);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Get('/:id/:token')

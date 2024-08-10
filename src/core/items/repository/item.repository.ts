@@ -6,6 +6,7 @@ import { ItemEntity } from '../entity/item.entity';
 
 @Injectable()
 export class ItemRepository extends Repository<ItemEntity> {
+  protected relation = ['product'];
   constructor(
     @InjectRepository(ItemEntity)
     protected repository: Pick<

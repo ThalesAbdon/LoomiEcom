@@ -3,17 +3,17 @@ import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { UserRole } from 'src/shared/user-role.enum';
 
 export class ListUserDtoInput {
-  @ApiProperty({ type: String, example: 'Luffy' })
+  @ApiProperty({ type: String, required: false, example: 'Luffy' })
   @IsString()
   @IsOptional()
   name?: string;
 
-  @ApiProperty({ type: String, example: 'luffy@gmail.com' })
+  @ApiProperty({ type: String, required: false, example: 'luffy@gmail.com' })
   @IsString()
   @IsOptional()
   email?: string;
 
-  @ApiProperty({ type: String, example: 'client' })
+  @ApiProperty({ type: String, required: false, example: 'client' })
   @IsEnum(UserRole)
   @IsNotEmpty()
   @IsOptional()

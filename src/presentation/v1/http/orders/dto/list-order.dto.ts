@@ -9,18 +9,18 @@ import {
 import { OrderStatus } from 'src/shared/order-status.enum';
 
 export class ListOrderDtoInput {
-  @ApiProperty({ type: String, example: 'received' })
+  @ApiProperty({ type: String, required: false, example: 'received' })
   @IsEnum(OrderStatus)
   @IsNotEmpty()
   @IsOptional()
   status?: OrderStatus;
 
-  @ApiProperty({ type: String, example: 1 })
+  @ApiProperty({ type: String, required: false, example: 1 })
   @IsNumberString()
   @IsOptional()
   clientId?: number;
 
-  @ApiProperty({ type: String, example: 900 })
+  @ApiProperty({ type: String, required: false, example: 900 })
   @IsNumber()
   @IsOptional()
   total?: number;
