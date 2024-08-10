@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20
 
 WORKDIR /usr/src/app
 
@@ -9,5 +9,3 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
-ENTRYPOINT ["/bin/sh", "-c", "npm start"]

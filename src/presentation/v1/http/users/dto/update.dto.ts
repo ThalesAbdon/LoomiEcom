@@ -4,24 +4,28 @@ import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
 import { UserRole } from 'src/shared/user-role.enum';
 
 export class UpdateUserDtoInput {
-  @ApiProperty({ type: String, example: 'Luffy' })
+  @ApiProperty({ type: String, required: false, example: 'Rodrigo' })
   @IsString()
   @IsOptional()
   name?: string;
 
-  @ApiProperty({ type: String, example: 'luffy@gmail.com' })
+  @ApiProperty({
+    type: String,
+    required: false,
+    example: 'novoemail@gmail.com',
+  })
   @IsString()
   @IsOptional()
   @Transform(({ value }) => value.toLowerCase())
   email?: string;
 
-  @ApiProperty({ type: String, example: 'Test*123456' })
+  @ApiProperty({ type: String, required: false, example: '12345678' })
   @IsString()
   @MinLength(6)
   @IsOptional()
   password?: string;
 
-  @ApiProperty({ type: String, example: 'client' })
+  @ApiProperty({ type: String, required: false, example: 'client' })
   @IsEnum(UserRole)
   @IsOptional()
   type?: UserRole;

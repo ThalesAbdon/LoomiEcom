@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 export class UpdateProductDtoInput {
-  @ApiProperty({ type: String, example: 'Luffy' })
+  @ApiProperty({ type: String, required: false, example: 'Arroz' })
   @IsString()
   @IsOptional()
   @MaxLength(300)
@@ -18,13 +18,17 @@ export class UpdateProductDtoInput {
   @Transform(({ value }) => value.toLowerCase())
   name?: string;
 
-  @ApiProperty({ type: String, example: 'luffy@gmail.com' })
+  @ApiProperty({
+    type: String,
+    required: false,
+    example: 'Descrição de um produto',
+  })
   @IsString()
   @IsOptional()
   @Transform(({ value }) => value.toLowerCase())
   description?: string;
 
-  @ApiProperty({ type: String, example: 'Test*123456' })
+  @ApiProperty({ type: Number, required: false, example: 'preço do produto' })
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0.01, { message: 'Price must be greater than or equal to 0' })
   @IsOptional()
@@ -34,9 +38,9 @@ export class UpdateProductDtoInput {
     }
     return value;
   })
-  price: number;
+  price?: number;
 
-  @ApiProperty({ type: String, example: 'client' })
+  @ApiProperty({ type: Number, required: false, example: 'client' })
   @IsOptional()
   @Min(0, { message: 'Quantity in Stock must be greater than or equal to 0' })
   quantityStock?: number;

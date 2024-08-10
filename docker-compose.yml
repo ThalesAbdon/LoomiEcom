@@ -43,7 +43,7 @@ services:
     depends_on:
       - db
     command: >
-      sh -c " npm run migration:run && npm start"
+      sh -c "npm run migration:run && npm start"
 
 volumes:
   postgres_data: {}
@@ -52,4 +52,4 @@ networks:
   backend_network:
     driver: bridge
 
-# docker compose --env-file .env up -d
+# docker compose --env-file .env up
