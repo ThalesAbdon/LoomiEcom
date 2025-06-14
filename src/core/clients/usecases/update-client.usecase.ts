@@ -14,11 +14,25 @@ export class UpdateClientUsecase
     @Inject(ClientRepository)
     private readonly _clientRepository: ClientRepository,
   ) {}
+
   async execute(
     input: UpdateClientUsecaseInput & { id: number },
   ): Promise<UpdateClientUsecaseOutput> {
     const id = input.id;
     delete input.id;
-    return await this._clientRepository.update(id, input);
+
+    const updatedClient = await this._clientRepository.update(id, input);
+
+    // Mapeia os campos de snake_case para camelCase
+    return {
+      id: updatedClient.id,
+      userId: updatedClient.user_id,
+      fullName: updatedClient.full_name,
+      contact: updatedClient.contact,
+      address: updatedClient.address,
+      status: updatedClient.status,
+      createdAt: updatedClient.created_at,
+      updatedAt: updatedClient.updated_at,
+    };
   }
 }

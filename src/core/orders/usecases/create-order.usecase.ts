@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-
 import { IUseCase } from 'src/core/interfaces/IUsecase';
 import {
   CreateOrderUsecaseInput,
@@ -15,12 +14,22 @@ export class CreateOrderUsecase
     @Inject(OrderRepository)
     private readonly orderRepository: OrderRepository,
   ) {}
+
   async execute(
     input: CreateOrderUsecaseInput,
   ): Promise<CreateOrderUsecaseOutput> {
-    return await this.orderRepository.create({
-      clientId: input.clientId,
+    const order = await this.orderRepository.create({
+      client: { connect: { id: input.clientId } },
       total: input.total,
     });
+
+    return {
+      id: order.id,
+      clientId: order.client_id,
+      total: order.total,
+      status: order.status,
+      orderDate: order.order_date,
+      updatedAt: order.updated_at,
+    };
   }
 }

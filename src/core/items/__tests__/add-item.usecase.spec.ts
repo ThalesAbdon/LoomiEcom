@@ -17,7 +17,7 @@ describe('AddItemUsecase', () => {
         {
           provide: ItemRepository,
           useValue: {
-            create: jest.fn(), // Mock da função create
+            create: jest.fn(), 
           },
         },
       ],

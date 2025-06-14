@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateClientUsecase } from 'src/core/clients/usecases/create-client.usecase'; // Ajuste o caminho conforme necessário
-import { ClientRepository } from 'src/core/clients/repository/client.repository'; // Ajuste o caminho conforme necessário
+import { CreateClientUsecase } from 'src/core/clients/usecases/create-client.usecase'; 
+import { ClientRepository } from 'src/core/clients/repository/client.repository'; 
 import {
   CreateClientUsecaseInput,
   CreateClientUsecaseOutput,
-} from 'src/core/clients/interfaces/create.client.usecase.interface'; // Ajuste o caminho conforme necessário
+} from 'src/core/clients/interfaces/create.client.usecase.interface'; 
 
 describe('CreateClientUsecase', () => {
   let usecase: CreateClientUsecase;
@@ -17,7 +17,7 @@ describe('CreateClientUsecase', () => {
         {
           provide: ClientRepository,
           useValue: {
-            create: jest.fn(), // Mock da função create
+            create: jest.fn(),
           },
         },
       ],
@@ -34,9 +34,9 @@ describe('CreateClientUsecase', () => {
   describe('execute', () => {
     it('should call repository.create with correct input and return the result', async () => {
       const input: CreateClientUsecaseInput = {
-        fullName: 'Thales',
-        contact: '4',
-        address: 'Rua 25',
+        fullName: 'Joao',
+        contact: '1',
+        address: 'caminho da paz 11',
         userId: 1,
       };
       const output: CreateClientUsecaseOutput = {

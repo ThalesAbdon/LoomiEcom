@@ -1,8 +1,17 @@
 import { OrderStatus } from 'src/shared/order-status.enum';
-import { FindOperator } from 'typeorm';
 
 export interface GenerateFileApplicationInput {
-  orderDate?: FindOperator<Date>;
-  updatedAt?: FindOperator<Date>;
+  orderDate?: {
+    gt?: Date;  
+    gte?: Date; 
+    lt?: Date;  
+    lte?: Date;
+  };
+  updatedAt?: {
+    gt?: Date;
+    gte?: Date;
+    lt?: Date;
+    lte?: Date;
+  };
   status?: OrderStatus;
 }

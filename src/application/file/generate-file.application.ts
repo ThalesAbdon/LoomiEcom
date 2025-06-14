@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { ListOrderUsecase } from 'src/core/orders/usecases/list-order.usecase';
 import { GenerateFileApplicationInput } from './interface/generate-file.application.interface';
-import { LessThan, MoreThan } from 'typeorm';
 
 @Injectable()
 export class GenerateFileApplication {
@@ -13,18 +12,25 @@ export class GenerateFileApplication {
     @Inject(ListOrderUsecase)
     private listOrderUsecase: ListOrderUsecase,
   ) {}
+
   async execute(input: GenerateFileApplicationInput): Promise<any> {
     try {
-      if (input?.orderDate) {
-        input.orderDate = MoreThan(input?.orderDate);
+      const filters: any = { ...input };
+
+      if (input.orderDate) {
+        filters.orderDate = { gt: input.orderDate };
       }
-      if (input?.updatedAt) {
-        input.updatedAt = LessThan(input?.updatedAt);
+
+      if (input.updatedAt) {
+        filters.updatedAt = { lt: input.updatedAt };
       }
-      const orders = await this.listOrderUsecase.execute(input);
+
+      const orders = await this.listOrderUsecase.execute(filters);
+
       const report = [];
+
       for (const order of orders) {
-        for (const item of order.item) {
+        for (const item of order.item || []) {
           report.push({
             'Identificador do Pedido': item.orderId,
             'Identificador do Produto': item.productId,
@@ -35,6 +41,7 @@ export class GenerateFileApplication {
           });
         }
       }
+
       return report;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

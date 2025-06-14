@@ -12,6 +12,6 @@ export class ListItemUsecase implements IUseCase<ListItemUsecaseInput, Item[]> {
     @Inject(ItemRepository) private readonly itemRepository: ItemRepository,
   ) {}
   async execute(input: ListItemUsecaseInput): Promise<Item[]> {
-    return await this.itemRepository.get(input);
+    return await this.itemRepository.findBy(input);
   }
 }

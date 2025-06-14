@@ -1,4 +1,4 @@
-import { OrderStatus } from 'src/shared/order-status.enum';
+import { OrderStatus } from '@prisma/client';
 
 export interface FindByIdOrderUsecaseInput {
   id: number;

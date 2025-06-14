@@ -1,49 +1,43 @@
-import {
-  Repository as RepositoryTypeorm,
-  DeleteResult,
-  DeepPartial,
-} from 'typeorm';
+import { PrismaClient } from '@prisma/client';
 
-class EntityBase {
-  id: number;
-  createdAt?: Date;
-  updatedAt: Date;
-}
-
-export class Repository<I extends EntityBase> {
-  protected relation: string[];
+export class PrismaRepository<T> {
   constructor(
-    protected repository: Pick<
-      RepositoryTypeorm<I>,
-      'save' | 'find' | 'findOne' | 'delete' | 'findBy'
-    >,
+    protected prisma: PrismaClient,
+    protected modelDelegate: any, 
   ) {}
 
-  async create(input: DeepPartial<I>): Promise<I> {
-    return this.repository.save(input);
+  async create(data: any): Promise<T> {
+    return this.modelDelegate.create({ data });
   }
 
-  async update(id: number, input: DeepPartial<I>): Promise<I> {
-    input.updatedAt = new Date();
-    return this.repository.save({ id, ...input });
-  }
-
-  async findById(id: any): Promise<any> {
-    return this.repository.findOne({
-      where: { id: id },
-      relations: this.relation,
+  async update(id: number, data: any): Promise<T> {
+    return this.modelDelegate.update({
+      where: { id },
+      data,
     });
   }
 
-  async findOne(input: Record<string, any>): Promise<I> {
-    return this.repository.findOne({ where: input, relations: this.relation });
+  async findById(id: number): Promise<T | null> {
+    return this.modelDelegate.findUnique({
+      where: { id },
+    });
   }
 
-  async delete(id: number): Promise<DeleteResult> {
-    return this.repository.delete(id);
+  async findOne(where: any): Promise<T | null> {
+    return this.modelDelegate.findFirst({
+      where,
+    });
   }
 
-  async get(where: Record<string, any>): Promise<I[]> {
-    return this.repository.find({ where: where, relations: this.relation });
+  async delete(id: number): Promise<T> {
+    return this.modelDelegate.delete({
+      where: { id },
+    });
+  }
+
+  async get(where: any): Promise<T[]> {
+    return this.modelDelegate.findMany({
+      where,
+    });
   }
 }

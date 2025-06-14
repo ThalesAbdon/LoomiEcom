@@ -16,6 +16,6 @@ export class AddItemUsecase
     private readonly itemRepository: ItemRepository,
   ) {}
   async execute(input: AddItemUsecaseInput): Promise<AddItemUsecaseOutput> {
-    return await this.itemRepository.create({ ...input });
+    return await this.itemRepository.save({ ...input });
   }
 }

@@ -12,7 +12,19 @@ export class ListClientUsecase
     @Inject(ClientRepository)
     private readonly _clientRepository: ClientRepository,
   ) {}
+
   async execute(input: ListClientUsecaseInput): Promise<Client[]> {
-    return await this._clientRepository.get(input);
+    const clients = await this._clientRepository.findMany(input);
+
+    return clients.map(client => ({
+      id: client.id,
+      userId: client.user_id,
+      fullName: client.full_name,
+      contact: client.contact,
+      address: client.address,
+      status: client.status,
+      createdAt: client.created_at,
+      updatedAt: client.updated_at,
+    }));
   }
 }

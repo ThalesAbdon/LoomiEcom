@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateOrderUsecase } from 'src/core/orders/usecases/create-order.usecase'; // Ajuste o caminho conforme necessário
-import { OrderRepository } from 'src/core/orders/repository/order.repository'; // Ajuste o caminho conforme necessário
+import { CreateOrderUsecase } from 'src/core/orders/usecases/create-order.usecase';
+import { OrderRepository } from 'src/core/orders/repository/order.repository';
 import {
   CreateOrderUsecaseInput,
   CreateOrderUsecaseOutput,
-} from 'src/core/orders/interfaces/create-order.usecase.interface'; // Ajuste o caminho conforme necessário
+} from 'src/core/orders/interfaces/create-order.usecase.interface';
 import { OrderStatus } from 'src/shared/order-status.enum';
 
 describe('CreateOrderUsecase', () => {

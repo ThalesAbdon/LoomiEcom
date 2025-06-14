@@ -13,10 +13,12 @@ export class FindByIdItemUsecase
   constructor(
     @Inject(ItemRepository) private readonly _itemRepository: ItemRepository,
   ) {}
+
   async execute(
     input: FindByIdItemUsecaseInput,
   ): Promise<FindByIdItemUsecaseOutput> {
-    const item = await this._itemRepository.findOne(input);
+    const id = input.id;
+    const item = await this._itemRepository.findOne(id); 
     return item;
   }
 }

@@ -6,7 +6,6 @@ import { AuthService } from 'src/presentation/guard/auth.service';
 import { Bcrypt } from 'src/presentation/guard/bcrypt';
 import { HttpContext } from 'src/presentation/guard/http.context';
 import { JwtService } from '@nestjs/jwt';
-import { EmailService } from 'src/infra/mail/service/email.service';
 import * as bcrypt from 'bcrypt';
 import { LoginUserApplication } from 'src/application/users/login-user.application';
 import { FindByIdUserApplication } from 'src/application/users/find-by-id-user.application';
@@ -34,6 +33,7 @@ import { DeleteOrderApplication } from 'src/application/orders/delete-order.appl
 import { ListItemApplication } from 'src/application/items/list-item.application';
 import { FindByIdItemApplication } from 'src/application/items/find-by-id-item.application';
 import { GenerateFileApplication } from 'src/application/file/generate-file.application';
+import { SendgridEmailService } from 'src/infra/mail/service/sendgrid-email.service';
 
 const applicationProviders: Provider[] = [
   CreateUserApplication,
@@ -68,7 +68,7 @@ const applicationProviders: Provider[] = [
   Bcrypt,
   HttpContext,
   JwtService,
-  EmailService,
+  SendgridEmailService,
   {
     provide: 'bcrypt',
     useValue: bcrypt,

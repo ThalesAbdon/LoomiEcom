@@ -10,11 +10,11 @@ import {
   CreateUserApplicationOutput,
 } from './interfaces/create-user.application.interface';
 import { VerifyEmailUsecase } from 'src/core/users/usecases/verify-email.usecase';
-import { EmailService } from 'src/infra/mail/service/email.service';
 import { EmailTemplateParams } from 'src/shared/utils/interface/email-template';
 import { Bcrypt } from 'src/presentation/guard/bcrypt';
 import { AuthService } from 'src/presentation/guard/auth.service';
 import { Request } from 'express';
+import { SendgridEmailService } from 'src/infra/mail/service/sendgrid-email.service';
 
 @Injectable()
 export class CreateUserApplication {
@@ -22,7 +22,7 @@ export class CreateUserApplication {
     @Inject(CreateUserUsecase) private createUserUseCase: CreateUserUsecase,
     @Inject(VerifyEmailUsecase) private verifyEmailUsecase: VerifyEmailUsecase,
     @Inject(Bcrypt) private bcrypt: Bcrypt,
-    @Inject(EmailService) private readonly emailService: EmailService,
+    @Inject(SendgridEmailService) private readonly emailService: SendgridEmailService,
     @Inject(AuthService) private readonly authService: AuthService,
   ) {}
   async execute(

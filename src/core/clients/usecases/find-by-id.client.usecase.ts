@@ -6,14 +6,28 @@ import { ClientRepository } from '../repository/client.repository';
 
 @Injectable()
 export class FindByIdClientUsecase
-  implements IUseCase<FindByIdClientUsecaseInput, ClientEntity>
+  implements IUseCase<FindByIdClientUsecaseInput, ClientEntity | null>
 {
   constructor(
     @Inject(ClientRepository)
     private readonly _clientRepository: ClientRepository,
   ) {}
-  async execute(input: FindByIdClientUsecaseInput): Promise<ClientEntity> {
+
+  async execute(input: FindByIdClientUsecaseInput): Promise<ClientEntity | null> {
     const client = await this._clientRepository.findOne(input);
-    return client;
+    if (!client) {
+      return null;
+    }
+
+    return new ClientEntity({
+      id: client.id,
+      userId: client.user_id,
+      fullName: client.full_name,
+      contact: client.contact,
+      address: client.address,
+      status: client.status,
+      createdAt: client.created_at,
+      updatedAt: client.updated_at,
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { OrderStatus } from 'src/shared/order-status.enum';
+import { OrderStatus } from '@prisma/client';
 
 export interface CreateOrderUsecaseInput {
   clientId: number;
@@ -11,4 +11,5 @@ export interface CreateOrderUsecaseOutput {
   status: OrderStatus;
   orderDate: Date;
   total: number;
+  updatedAt: Date;
 }

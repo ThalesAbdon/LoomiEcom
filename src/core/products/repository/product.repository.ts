@@ -1,18 +1,56 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository as RepositoryTypeorm } from 'typeorm';
-import { Repository } from 'src/infra/database/postgres/repositories/repository';
-import { ProductEntity } from '../entity/product.entity';
+import { PrismaService } from 'src/infra/database/postgres/prisma/prisma.service';
+import type { Product, Prisma } from '@prisma/client';
 
 @Injectable()
-export class ProductRepository extends Repository<ProductEntity> {
-  constructor(
-    @InjectRepository(ProductEntity)
-    protected repository: Pick<
-      RepositoryTypeorm<ProductEntity>,
-      'save' | 'find' | 'findOne' | 'delete' | 'findBy'
-    >,
-  ) {
-    super(repository);
+export class ProductRepository {
+  constructor(private prisma: PrismaService) {}
+
+  async save(data: Prisma.ProductCreateInput | Prisma.ProductUpdateInput & { id?: number }): Promise<Product> {
+    if ('id' in data && data.id) {
+      // Update
+      const { id, ...updateData } = data;
+      return this.prisma.product.update({
+        where: { id },
+        data: updateData,
+      });
+    } else {
+      // Create
+      return this.prisma.product.create({
+        data: data as Prisma.ProductCreateInput,
+      });
+    }
+  }
+
+  async findAll(): Promise<Product[]> {
+    return this.prisma.product.findMany({
+      include: {
+        items: true,
+      },
+    });
+  }
+
+  async findOne(id: number): Promise<Product | null> {
+    return this.prisma.product.findUnique({
+      where: { id },
+      include: {
+        items: true,
+      },
+    });
+  }
+
+  async delete(id: number): Promise<Product> {
+    return this.prisma.product.delete({
+      where: { id },
+    });
+  }
+
+  async findBy(where: Prisma.ProductWhereInput): Promise<Product[]> {
+    return this.prisma.product.findMany({
+      where,
+      include: {
+        items: true,
+      },
+    });
   }
 }

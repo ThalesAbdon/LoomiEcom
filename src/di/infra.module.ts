@@ -1,54 +1,36 @@
 import { Module, Provider } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/core/users/entity/user.entity';
-import { UserRepository } from 'src/core/users/repository/user.repository';
-import { config } from 'src/infra/database/postgres/typeOrm.migration-config';
-import { EmailService } from 'src/infra/mail/service/email.service';
 import { JwtModule } from '@nestjs/jwt';
+
+import { PrismaService } from 'src/infra/database/postgres/prisma/prisma.service';
+
+import { UserRepository } from 'src/core/users/repository/user.repository';
 import { ClientRepository } from 'src/core/clients/repository/client.repository';
-import { ClientEntity } from 'src/core/clients/entity/client.entity';
 import { ProductRepository } from 'src/core/products/repository/product.repository';
-import { ProductEntity } from 'src/core/products/entity/product.entity';
-import { ItemEntity } from 'src/core/items/entity/item.entity';
-import { OrderEntity } from 'src/core/orders/entity/order.entity';
 import { ItemRepository } from 'src/core/items/repository/item.repository';
 import { OrderRepository } from 'src/core/orders/repository/order.repository';
 
+import { SendgridEmailService } from 'src/infra/mail/service/sendgrid-email.service';
+
 export const infraProviders: Provider[] = [
+  PrismaService,
   UserRepository,
   ClientRepository,
   ProductRepository,
-  EmailService,
   ItemRepository,
   OrderRepository,
+  SendgridEmailService,
 ];
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(config),
-    TypeOrmModule.forFeature([
-      UserEntity,
-      ClientEntity,
-      ProductEntity,
-      ItemEntity,
-      OrderEntity,
-    ]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
+        expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME, 10),
       },
     }),
   ],
-  exports: [
-    TypeOrmModule.forRoot(config),
-    UserRepository,
-    EmailService,
-    ClientRepository,
-    ProductRepository,
-    ItemRepository,
-    OrderRepository,
-  ],
   providers: infraProviders,
+  exports: infraProviders,
 })
 export class InfraModule {}

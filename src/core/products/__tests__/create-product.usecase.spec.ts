@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateProductUsecase } from 'src/core/products/usecases/create-product.usecase'; // Ajuste o caminho conforme necessário
-import { ProductRepository } from 'src/core/products/repository/product.repository'; // Ajuste o caminho conforme necessário
+import { CreateProductUsecase } from 'src/core/products/usecases/create-product.usecase'; 
+import { ProductRepository } from 'src/core/products/repository/product.repository'; 
 import {
   CreateProductUsecaseInput,
   CreateProductUsecaseOutput,
-} from 'src/core/products/interfaces/create-product.usecase.interface'; // Ajuste o caminho conforme necessário
+} from 'src/core/products/interfaces/create-product.usecase.interface'; 
 
 describe('CreateProductUsecase', () => {
   let usecase: CreateProductUsecase;
@@ -17,7 +17,7 @@ describe('CreateProductUsecase', () => {
         {
           provide: ProductRepository,
           useValue: {
-            create: jest.fn(), // Mock da função create
+            create: jest.fn(),
           },
         },
       ],
